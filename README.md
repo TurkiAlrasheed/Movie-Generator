@@ -11,7 +11,9 @@ Steps:
 2- Download movie-generator-app.py
 
 3- Download necessary packages: 
+
 pip install transformers
+
 pip install gradio
 
 4- run:

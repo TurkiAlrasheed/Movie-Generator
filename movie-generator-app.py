@@ -5,16 +5,16 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration
 models_dict = {}
 
 # Load model 1
-model_name_or_path_1 = "t5_movies"
+model_name_or_path_1 = "t5_movies" # TODO:
 tokenizer_1 = T5Tokenizer.from_pretrained(model_name_or_path_1)
 model_1 = T5ForConditionalGeneration.from_pretrained(model_name_or_path_1)
-models_dict["T5 Movies V1"] = (tokenizer_1, model_1)
+models_dict["T5-base-20000"] = (tokenizer_1, model_1)
 
 # Load model 2
-model_name_or_path_2 = "t5_movies_flan"
+model_name_or_path_2 = "t5_movies_full"
 tokenizer_2 = T5Tokenizer.from_pretrained(model_name_or_path_2)
 model_2 = T5ForConditionalGeneration.from_pretrained(model_name_or_path_2)
-models_dict["T5 Movies V2"] = (tokenizer_2, model_2)
+models_dict["T5-small-full"] = (tokenizer_2, model_2)
 
 """# 1. Load the tokenizer and model
 model_name_or_path = "t5_movies"  # local folder with your fine-tuned T5 model
@@ -22,13 +22,12 @@ tokenizer = T5Tokenizer.from_pretrained(model_name_or_path)
 model = T5ForConditionalGeneration.from_pretrained(model_name_or_path)
 """
 # 2. Define a function that takes the user inputs and returns the model output
-def generate_response(model_choice,slider_value, top_k, adult, genres, keywords):
+def generate_response(model_choice,slider_value, genres, keywords):
     # Create a prompt
     tokenizer, model = models_dict[model_choice]
     top_k_selected = 10 + int((slider_value / 100) * (50 - 10))
     
     prompt = (
-        f"adult: {adult}\n"
         f"genres: {genres}\n"
         f"keywords: {keywords}\n"
         "Generate title and overview:"
@@ -42,10 +41,10 @@ def generate_response(model_choice,slider_value, top_k, adult, genres, keywords)
         input_ids,
         max_length=256,
         do_sample=True,
-        top_p=0.9,
+        #top_p=0.9,
         top_k=top_k_selected, # recommended 30
         temperature=1.0,
-        repetition_penalty=1.1
+        repetition_penalty=1.2
     )
     output_text = tokenizer.decode(output_ids[0], skip_special_tokens=True)
 
@@ -66,13 +65,13 @@ def generate_response(model_choice,slider_value, top_k, adult, genres, keywords)
     # Return them as two separate fields
     return title, overview
 
-# 3. Create a Gradio interface
+# 3. Creating a Gradio interface
 interface = gr.Interface(
     fn=generate_response, 
     inputs=[
         # Let the user pick a model
         gr.Dropdown(
-            choices=list(models_dict.keys()),  # e.g. ["T5 Movies V1", "T5 Movies V2"]
+            choices=list(models_dict.keys()),  
             label="Select Model"
         ),
         gr.Slider(

@@ -8,22 +8,24 @@ model = T5ForConditionalGeneration.from_pretrained(model_name_or_path)
 
 # 2. Define a function that takes the user inputs and returns the model output
 def generate_response(adult, genres, keywords):
-    # Construct an input string in the format your model expects.
-    # Adjust this as needed based on how your model was trained/prompts were formatted.
-    input_text = f"adult: {adult}, genres: {genres}, keywords: {keywords}"
-    
+    # Create a prompt
+    prompt = (f"adult: {adult}\n"
+            f"genres: {genres}\n"
+            f"keywords: {keywords}\n"
+            "Generate title and overview:")
+
     # Tokenize
-    inputs = tokenizer(input_text, return_tensors="pt", max_length=128, truncation=True)
-    
+    input_ids = tokenizer.encode(prompt, return_tensors="pt")
     # Generate
     output_ids = model.generate(
-        **inputs, 
-        max_length=256, 
-        num_beams=4,    # or whichever decoding strategy you prefer
-        early_stopping=True
+        input_ids,
+        max_length=256,
+        do_sample=True,
+        top_p=0.9,       # nucleus/top-p sampling
+        top_k=50,
+        temperature=1.0,
+        repetition_penalty=1.1
     )
-    
-    # Decode
     output_text = tokenizer.decode(output_ids[0], skip_special_tokens=True)
     return output_text
 

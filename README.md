@@ -2,6 +2,8 @@
 
 In this project, we fine-tuned Google's T5 LLM models to generate movie titles and plots based on user inputted list of genres, keywords, and uniqueness scale.
 
+![Movie Generator Screenshot](app_page_example.png)
+
 A brief explanation of our project is linked here: https://docs.google.com/presentation/d/1RL3CpS6M5iGCNIxN3pANu_b86eMyvvdJF246kzFfo8Q/edit#slide=id.g349101410f4_0_0
 
 Try out the models for yourself!!!

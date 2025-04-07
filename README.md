@@ -2,6 +2,8 @@
 
 In this project, we created LLM models that take in an input of genres, keywords, and a uniqueness scale, outputing a title and overview of a movie.
 
+A brief explanation of our project is linked here: https://docs.google.com/presentation/d/1RL3CpS6M5iGCNIxN3pANu_b86eMyvvdJF246kzFfo8Q/edit#slide=id.g349101410f4_0_0
+
 Try out the models for yourself!!!
 
 Steps:

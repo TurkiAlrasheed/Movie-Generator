@@ -1,4 +1,4 @@
-# Movie Generator
+# PlotCraft: Generating Movie Titles and Storylines from Prompts 
 
 In this project, we fine-tuned Google's T5 LLM models to generate movie titles and plots based on user inputted list of genres, keywords, and uniqueness scale.
 

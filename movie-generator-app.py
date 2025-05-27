@@ -88,7 +88,7 @@ interface = gr.Interface(
         gr.Textbox(label="Title"),
         gr.Textbox(label="Overview")
     ],         # Two separate text outputs: title and overview
-    title="Movie Title & Overview Generator",
+    title="PlotCraft: Generating Movie Titles and Storylines from Prompts",
     description="Choose a model, pick how 'unique' vs. 'generic' you'd like the output, enter values for genres and keywords to see your generated title and overview."
 )
 
